@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  md_postgresql:
+    image: postgres:11
+    container_name: md_postgresql
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=md
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - md-db:/var/lib/postgresql/data
+    networks:
+      md_network:
+        ipv4_address: 10.8.0.5
+
+  md_backend:
+    expose:
+      - 8000
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    container_name: md_backend
+    volumes:
+      - ./backend:/home/app/web
+    environment:
+      - EXTERNAL_IP=127.0.0.1
+      - POSTGRES_HOST=10.8.0.5
+      - POSTGRES_DB=md
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    restart: always
+    depends_on:
+      - md_postgresql
+    networks:
+      md_network:
+        ipv4_address: 10.8.0.7
+
+networks:
+  md_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.8.0.0/16
+
+volumes:
+  md-db:
+    driver: local
