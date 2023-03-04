@@ -28,10 +28,11 @@ services:
       - ./backend:/home/app/web
     environment:
       - EXTERNAL_IP=127.0.0.1
-      - POSTGRES_HOST=10.8.0.5
-      - POSTGRES_DB=md
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - DB_HOST=10.8.0.5
+      - DB_PORT=5432
+      - DB_DATABASE=md
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
     restart: always
     depends_on:
       - md_postgresql
