@@ -19,7 +19,7 @@ services:
 
   md_backend:
     expose:
-      - 8000
+      - 8080
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -33,6 +33,10 @@ services:
       - DB_DATABASE=md
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
+      - PORT=8080
+      - ENVIRONMENT=development
+      - DEBUG=true
+      - JWT_SECRET=enter-a-secret-here
     restart: always
     depends_on:
       - md_postgresql
