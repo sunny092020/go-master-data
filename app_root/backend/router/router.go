@@ -1,10 +1,10 @@
 package router
 
 import (
-	v1 "github.com/daystram/go-gin-gorm-boilerplate/controllers/v1"
 	"github.com/gin-gonic/gin"
 
 	"github.com/sunny092020/go-master-data/controllers/middleware"
+	"github.com/sunny092020/go-master-data/controllers/v1"
 	"github.com/sunny092020/go-master-data/utils"
 )
 
