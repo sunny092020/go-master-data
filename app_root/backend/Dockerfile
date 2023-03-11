@@ -15,9 +15,6 @@ COPY . .
 # Using go get.
 RUN go get -d -v
 
-# Install a new Go package
-RUN go get github.com/codegangsta/gin@latest
-
 # Build the binary.
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/main .
 
@@ -31,9 +28,9 @@ WORKDIR /
 # Copy our static executable.
 COPY --from=builder /go/main /go/main
 
-ENV PORT 8080
+ENV PORT 3000
 ENV GIN_MODE release
-EXPOSE 8080
+EXPOSE 3000
 
 WORKDIR /go
 

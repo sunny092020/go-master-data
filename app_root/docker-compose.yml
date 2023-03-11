@@ -22,7 +22,7 @@ services:
       - 3000:3000
     build:
       context: ./backend
-      dockerfile: ./Dockerfile.dev
+      dockerfile: ./Dockerfile
     container_name: md_backend
     volumes:
       - ./backend:/app/
@@ -33,7 +33,7 @@ services:
       - DB_DATABASE=md
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
-      - PORT=8080
+      - PORT=3000
       - ENVIRONMENT=development
       - DEBUG=true
       - JWT_SECRET=enter-a-secret-here
