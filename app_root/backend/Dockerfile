@@ -15,6 +15,9 @@ COPY . .
 # Using go get.
 RUN go get -d -v
 
+# Install a new Go package
+RUN go get github.com/codegangsta/gin@latest
+
 # Build the binary.
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/main .
 
