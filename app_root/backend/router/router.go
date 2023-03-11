@@ -26,6 +26,11 @@ func InitializeRouter() (router *gin.Engine) {
 			user.GET("/:username", utils.AuthOnly, v1.GETUser)
 			user.PUT("", utils.AuthOnly, v1.PUTUser)
 		}
+
+		ping := v1route.Group("/ping")
+		{
+			ping.GET("", v1.GETPing)
+		}
 	}
 	return
 }
