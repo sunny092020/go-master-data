@@ -33,3 +33,7 @@ func TestCalculate(t *testing.T) {
 func TestSomething(t *testing.T) {
   assert.True(t, true, "True is true!")
 }
+
+func TestSomethingMore(t *testing.T) {
+	assert.Equal(t, 1, 1)
+}
