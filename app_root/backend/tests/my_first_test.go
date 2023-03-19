@@ -1,6 +1,7 @@
 package my_first_test
 
 import (
+	"container/list"
 	"testing"
 	"github.com/stretchr/testify/assert"
 )
@@ -90,4 +91,83 @@ func TestBinarySearch(t *testing.T) {
 	// Test an empty array
 	index = binarySearch([]int{}, 5)
 	assert.Equal(t, -1, index, "5 should not be found in an empty array")
+}
+
+type Graph struct {
+	vertices []*Vertex
+}
+
+type Vertex struct {
+	data     int
+	visited  bool
+	adjacent []*Vertex
+}
+
+func NewGraph() *Graph {
+	return &Graph{vertices: []*Vertex{}}
+}
+
+func (g *Graph) AddVertex(v *Vertex) {
+	g.vertices = append(g.vertices, v)
+}
+
+func (g *Graph) BFS(start *Vertex) []*Vertex {
+	queue := list.New()
+	var visitedVertices []*Vertex
+
+	queue.PushBack(start)
+	start.visited = true
+
+	for queue.Len() > 0 {
+		element := queue.Front()
+		queue.Remove(element)
+
+		vertex := element.Value.(*Vertex)
+		visitedVertices = append(visitedVertices, vertex)
+
+		for _, v := range vertex.adjacent {
+			if !v.visited {
+				v.visited = true
+				queue.PushBack(v)
+			}
+		}
+	}
+
+	return visitedVertices
+}
+
+func TestBFS(t *testing.T) {
+	graph := NewGraph()
+
+	// create vertices
+	vertex1 := &Vertex{data: 1}
+	vertex2 := &Vertex{data: 2}
+	vertex3 := &Vertex{data: 3}
+	vertex4 := &Vertex{data: 4}
+	vertex5 := &Vertex{data: 5}
+
+	// add edges
+	vertex1.adjacent = []*Vertex{vertex2, vertex3}
+	vertex2.adjacent = []*Vertex{vertex4, vertex5}
+	vertex3.adjacent = []*Vertex{vertex5}
+
+	// add vertices to graph
+	graph.AddVertex(vertex1)
+	graph.AddVertex(vertex2)
+	graph.AddVertex(vertex3)
+	graph.AddVertex(vertex4)
+	graph.AddVertex(vertex5)
+
+	// perform BFS
+	visitedVertices := graph.BFS(vertex1)
+
+	// check that all vertices were visited
+	assert.Equal(t, len(visitedVertices), 5)
+
+	// check the order in which vertices were visited
+	assert.Equal(t, visitedVertices[0].data, 1)
+	assert.Equal(t, visitedVertices[1].data, 2)
+	assert.Equal(t, visitedVertices[2].data, 3)
+	assert.Equal(t, visitedVertices[3].data, 4)
+	assert.Equal(t, visitedVertices[4].data, 5)
 }
