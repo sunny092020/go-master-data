@@ -36,4 +36,10 @@ func TestSomething(t *testing.T) {
 
 func TestSomethingMore(t *testing.T) {
 	assert.Equal(t, 1, 1)
+
+	// assert equality
+  assert.Equal(t, 123, 123, "they should be equal")
+
+  // assert inequality
+  assert.NotEqual(t, 123, 456, "they should not be equal")
 }
